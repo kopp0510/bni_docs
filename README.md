@@ -1,8 +1,56 @@
-# 商脈會 App 後端系統規劃
+# 商脈會 App 系統規劃文件
 
 ## 專案概述
 
 商脈會 App 是一個商業會員管理平台，提供會員管理、點數交易、活動管理、即時通訊等功能。
+
+---
+
+## 文件結構
+
+```
+bni_docs/
+├── README.md                 # 本文件（總覽）
+├── backend/                  # 後端 API 系統文件
+│   ├── README.md             # 後端系統總覽
+│   ├── architecture.md       # 系統架構說明
+│   └── systems/              # 各模組詳細規格
+│       ├── auth.md           # 認證系統
+│       ├── organization.md   # 商會管理
+│       ├── member.md         # 會員系統
+│       ├── point.md          # 點數系統
+│       ├── shop.md           # 店鋪系統
+│       ├── referral.md       # 推薦系統
+│       ├── meeting.md        # 交流預約系統
+│       ├── event.md          # 活動系統
+│       ├── donation.md       # 捐贈系統
+│       ├── lottery.md        # 抽獎系統
+│       ├── cms.md            # 內容管理
+│       ├── billing.md        # 帳務系統
+│       ├── chat.md           # 聊天系統
+│       └── notification.md   # 通知系統
+├── admin/                    # 後台 CMS 系統文件
+│   └── admin-cms.md          # 後台管理系統規劃
+├── app/                      # 客端 App 文件
+│   ├── README.md             # 客端 App 總覽
+│   └── screens/              # 各頁面詳細規格
+│       ├── home.md           # 首頁
+│       ├── member-zone.md    # 會員專區
+│       ├── business-lecture.md # 商學講堂
+│       ├── points.md         # 使用點數
+│       ├── about.md          # 認識愛心
+│       ├── public-merchant.md # 公益商家
+│       ├── events.md         # 最新活動
+│       ├── charity.md        # 公益團體
+│       ├── deals.md          # 好康優惠
+│       ├── lottery.md        # 抽抽樂
+│       ├── notification.md   # 通知中心
+│       ├── profile.md        # 關於我
+│       └── auth.md           # 登入註冊
+└── images/                   # 參考示意圖
+```
+
+---
 
 ## 系統架構總覽
 
@@ -13,61 +61,20 @@
 │         Mobile App (客端)        │           Admin CMS (後台)                │
 │      iOS / Android / Web        │             Web Dashboard                 │
 └─────────────────────────────────┴───────────────────────────────────────────┘
-                                      │
-                                      ▼
+                                     │
+                                     ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                              API Gateway                                     │
 │                         (Nginx / Load Balancer)                             │
 └─────────────────────────────────────────────────────────────────────────────┘
-                                      │
-                                      ▼
+                                     │
+                                     ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                         Backend Application                                  │
 │                           (NestJS + TypeScript)                             │
-│                                                                             │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                        核心服務 (Phase 1)                            │   │
-│  │  ┌──────────┐    ┌──────────────┐    ┌──────────────┐               │   │
-│  │  │   Auth   │───▶│ Organization │◀───│    Member    │               │   │
-│  │  │  認證系統 │    │   商會管理    │    │    會員系統   │               │   │
-│  │  └──────────┘    └──────────────┘    └──────────────┘               │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                             │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                        會員延伸 (Phase 2)                            │   │
-│  │  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐│   │
-│  │  │    Point     │ │     Shop     │ │   Referral   │ │   Meeting    ││   │
-│  │  │   點數系統    │ │    店鋪系統   │ │   推薦系統    │ │  交流預約系統  ││   │
-│  │  └──────────────┘ └──────────────┘ └──────────────┘ └──────────────┘│   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                             │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                        活動功能 (Phase 3)                            │   │
-│  │  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐                 │   │
-│  │  │    Event     │ │   Donation   │ │   Lottery    │                 │   │
-│  │  │   活動系統    │ │   捐贈系統    │ │   抽獎系統    │                 │   │
-│  │  └──────────────┘ └──────────────┘ └──────────────┘                 │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                             │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                        營運管理 (Phase 4)                            │   │
-│  │  ┌──────────────┐              ┌──────────────┐                     │   │
-│  │  │     CMS      │              │   Billing    │                     │   │
-│  │  │   內容管理    │              │   帳務系統    │                     │   │
-│  │  └──────────────┘              └──────────────┘                     │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                             │
-│  ┌─────────────────────────────────────────────────────────────────────┐   │
-│  │                        通訊服務 (Phase 5)                            │   │
-│  │  ┌──────────────┐              ┌──────────────┐                     │   │
-│  │  │     Chat     │              │ Notification │                     │   │
-│  │  │   聊天系統    │              │   通知系統    │                     │   │
-│  │  └──────────────┘              └──────────────┘                     │   │
-│  └─────────────────────────────────────────────────────────────────────┘   │
-│                                                                             │
 └─────────────────────────────────────────────────────────────────────────────┘
-                                      │
-                                      ▼
+                                     │
+                                     ▼
 ┌─────────────────────────────────────────────────────────────────────────────┐
 │                           Infrastructure Layer                               │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐    │
@@ -79,84 +86,79 @@
 
 ---
 
-## 系統模組清單
+## 文件導覽
 
-| 編號 | 模組名稱 | 文件連結 | 複雜度 | 開發階段 |
-|------|----------|----------|--------|----------|
-| 1 | Auth 認證系統 | [auth.md](./systems/auth.md) | 中 | Phase 1 |
-| 2 | Organization 商會管理 | [organization.md](./systems/organization.md) | 中 | Phase 1 |
-| 3 | Member 會員系統 | [member.md](./systems/member.md) | 高 | Phase 1 |
-| 4 | Point 點數系統 | [point.md](./systems/point.md) | 中 | Phase 2 |
-| 5 | Shop 店鋪系統 | [shop.md](./systems/shop.md) | 中 | Phase 2 |
-| 6 | Referral 推薦系統 | [referral.md](./systems/referral.md) | 中 | Phase 2 |
-| 7 | Meeting 交流預約系統 | [meeting.md](./systems/meeting.md) | 中 | Phase 2 |
-| 8 | Event 活動系統 | [event.md](./systems/event.md) | 中 | Phase 3 |
-| 9 | Donation 捐贈系統 | [donation.md](./systems/donation.md) | 低 | Phase 3 |
-| 10 | Lottery 抽獎系統 | [lottery.md](./systems/lottery.md) | 低 | Phase 3 |
-| 11 | CMS 內容管理 | [cms.md](./systems/cms.md) | 低 | Phase 4 |
-| 12 | Billing 帳務系統 | [billing.md](./systems/billing.md) | 中 | Phase 4 |
-| 13 | Chat 聊天系統 | [chat.md](./systems/chat.md) | 高 | Phase 5 |
-| 14 | Notification 通知系統 | [notification.md](./systems/notification.md) | 中 | Phase 5 |
+### 後端 API 系統
 
----
+後端使用 NestJS + TypeScript 開發，包含 14 個核心模組。
 
-## 前端規劃文件
+| 文件 | 說明 |
+|------|------|
+| [後端系統總覽](./backend/README.md) | 後端架構、模組清單、開發流程 |
+| [系統架構說明](./backend/architecture.md) | 詳細架構圖、相依關係 |
 
-| 文件 | 說明 | 連結 |
+#### 核心模組
+
+| 模組 | 文件 | 說明 |
 |------|------|------|
-| Admin CMS 後台管理系統 | React + Ant Design 後台前端規劃 | [admin-cms.md](./admin-cms.md) |
+| Auth | [auth.md](./backend/systems/auth.md) | 認證系統（登入、註冊、OTP） |
+| Organization | [organization.md](./backend/systems/organization.md) | 商會管理 |
+| Member | [member.md](./backend/systems/member.md) | 會員系統 |
+| Point | [point.md](./backend/systems/point.md) | 點數系統 |
+| Shop | [shop.md](./backend/systems/shop.md) | 店鋪系統 |
+| Referral | [referral.md](./backend/systems/referral.md) | 推薦系統 |
+| Meeting | [meeting.md](./backend/systems/meeting.md) | 交流預約系統 |
+| Event | [event.md](./backend/systems/event.md) | 活動系統 |
+| Donation | [donation.md](./backend/systems/donation.md) | 捐贈系統 |
+| Lottery | [lottery.md](./backend/systems/lottery.md) | 抽獎系統 |
+| CMS | [cms.md](./backend/systems/cms.md) | 內容管理 |
+| Billing | [billing.md](./backend/systems/billing.md) | 帳務系統 |
+| Chat | [chat.md](./backend/systems/chat.md) | 聊天系統 |
+| Notification | [notification.md](./backend/systems/notification.md) | 通知系統 |
 
 ---
 
-## 模組相依關係
+### 後台 CMS 系統
 
-```
-                    ┌──────────┐
-                    │   Auth   │
-                    │  認證系統 │
-                    └────┬─────┘
-                         │
-         ┌───────────────┼───────────────┐
-         │               │               │
-         ▼               ▼               ▼
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│ Organization │ │    Member    │ │     CMS      │
-│   商會管理    │ │    會員系統   │ │   內容管理    │
-└──────┬───────┘ └──────┬───────┘ └──────────────┘
-       │                │
-       │    ┌───────────┼───────────┐
-       │    │           │           │
-       ▼    ▼           ▼           ▼
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│    Point     │ │     Shop     │ │   Referral   │ │   Meeting    │
-│   點數系統    │ │    店鋪系統   │ │   推薦系統    │ │  交流預約系統  │
-└──────┬───────┘ └──────────────┘ └──────────────┘ └──────────────┘
-       │
-       ├─────────────────┬─────────────────┐
-       │                 │                 │
-       ▼                 ▼                 ▼
-┌──────────────┐ ┌──────────────┐ ┌──────────────┐
-│    Event     │ │   Donation   │ │   Lottery    │
-│   活動系統    │ │   捐贈系統    │ │   抽獎系統    │
-└──────────────┘ └──────────────┘ └──────────────┘
-                         │
-                         ▼
-                 ┌──────────────┐
-                 │   Billing    │
-                 │   帳務系統    │
-                 └──────────────┘
+後台使用 React + Ant Design 開發。
 
-┌──────────────┐ ┌──────────────┐
-│     Chat     │ │ Notification │  ◀── 獨立通訊服務
-│   聊天系統    │ │   通知系統    │      依賴 Auth + Member
-└──────────────┘ └──────────────┘
-```
+| 文件 | 說明 |
+|------|------|
+| [後台管理系統](./admin/admin-cms.md) | 後台功能規劃、頁面結構 |
+
+---
+
+### 客端 App
+
+客端使用 React Native / Flutter 開發。
+
+| 文件 | 說明 |
+|------|------|
+| [客端 App 總覽](./app/README.md) | App 架構、導航結構、UI 規範 |
+
+#### 頁面模組
+
+| 頁面 | 文件 | 說明 |
+|------|------|------|
+| 首頁 | [home.md](./app/screens/home.md) | 主頁面與功能入口 |
+| 會員專區 | [member-zone.md](./app/screens/member-zone.md) | 會員搜尋、交流、引薦 |
+| 商學講堂 | [business-lecture.md](./app/screens/business-lecture.md) | 課程列表、報名 |
+| 使用點數 | [points.md](./app/screens/points.md) | 點數管理、掃碼、轉點 |
+| 認識愛心 | [about.md](./app/screens/about.md) | 組織介紹 |
+| 公益商家 | [public-merchant.md](./app/screens/public-merchant.md) | 商家列表 |
+| 最新活動 | [events.md](./app/screens/events.md) | 活動列表、報名 |
+| 公益團體 | [charity.md](./app/screens/charity.md) | 公益團體、捐贈 |
+| 好康優惠 | [deals.md](./app/screens/deals.md) | 優惠資訊 |
+| 抽抽樂 | [lottery.md](./app/screens/lottery.md) | 小瑪莉抽獎 |
+| 通知中心 | [notification.md](./app/screens/notification.md) | 推播通知 |
+| 關於我 | [profile.md](./app/screens/profile.md) | 個人資料、設定 |
+| 登入註冊 | [auth.md](./app/screens/auth.md) | 登入、註冊流程 |
 
 ---
 
 ## 技術棧
 
-| 項目 | 技術選型 |
+| 層級 | 技術選型 |
 |------|----------|
 | 後端框架 | NestJS (TypeScript) |
 | 資料庫 | PostgreSQL |
@@ -166,63 +168,9 @@
 | 檔案儲存 | S3 / MinIO |
 | 容器化 | Docker + Docker Compose |
 | API 文件 | Swagger |
-
----
-
-## 專案結構
-
-```
-shangmai-backend/
-├── docker/
-│   ├── Dockerfile
-│   └── docker-compose.yml
-│
-├── prisma/
-│   ├── schema.prisma
-│   └── migrations/
-│
-├── src/
-│   ├── main.ts
-│   ├── app.module.ts
-│   │
-│   ├── config/
-│   │   ├── database.config.ts
-│   │   ├── redis.config.ts
-│   │   └── jwt.config.ts
-│   │
-│   ├── shared/
-│   │   ├── guards/
-│   │   ├── filters/
-│   │   ├── interceptors/
-│   │   ├── decorators/
-│   │   ├── dto/
-│   │   └── utils/
-│   │
-│   └── modules/
-│       ├── auth/
-│       ├── organization/
-│       ├── member/
-│       ├── point/
-│       ├── shop/
-│       ├── referral/
-│       ├── meeting/
-│       ├── event/
-│       ├── donation/
-│       ├── lottery/
-│       ├── cms/
-│       ├── billing/
-│       ├── chat/
-│       └── notification/
-│
-├── test/
-│   ├── unit/
-│   └── e2e/
-│
-├── .env.example
-├── package.json
-├── tsconfig.json
-└── README.md
-```
+| 後台前端 | React + Ant Design |
+| 客端 App | React Native / Flutter |
+| 推播通知 | Firebase Cloud Messaging |
 
 ---
 
@@ -262,100 +210,3 @@ shangmai-backend/
 | 簡訊驗證 | 手機驗證碼 | 自建 OTP 或第三方簡訊服務 |
 | 推播通知 | App 推播 | 自建 WebSocket 或 FCM |
 | 檔案儲存 | 圖片上傳 | 自建 MinIO 或 AWS S3 |
-
----
-
-## Claude Code 多 Agent 開發流程
-
-本專案採用 Claude Code 進行開發，運用多種專門 Agent 協作完成各階段任務。
-
-### 可用 Agent 類型
-
-| Agent | 用途 | 適用場景 |
-|-------|------|----------|
-| Plan | 軟體架構師 | 設計模組實作計劃、評估技術方案 |
-| systems-architect | 系統架構專家 | 架構審查、資料庫設計、系統整合 |
-| general-purpose | 通用開發 | 實際撰寫程式碼、功能實作 |
-| test-engineer | 測試專家 | 建立測試案例、品質保證、覆蓋率分析 |
-| security-auditor | 安全專家 | 安全審查、漏洞評估、OWASP 合規 |
-| performance-tuner | 效能專家 | 效能優化、瓶頸分析、查詢優化 |
-| refactor-expert | 重構專家 | 程式碼品質改善、技術債務處理 |
-| docs-writer | 文件專家 | API 文件、技術文件撰寫 |
-| root-cause-analyzer | 除錯專家 | 問題根因分析、複雜 Bug 排查 |
-| config-safety-reviewer | 配置審查 | 生產環境配置安全性檢查 |
-
-### 單一模組開發流程
-
-每個模組依照以下流程進行開發：
-
-| 步驟 | Agent | 任務內容 |
-|------|-------|----------|
-| 1 | Plan | 根據規格文件，規劃模組實作細節 |
-| 2 | systems-architect | 審查資料庫 Schema 與 API 設計 |
-| 3 | general-purpose | 開發後端 API（NestJS） |
-| 4 | general-purpose | 開發後台前端頁面（React） |
-| 5 | test-engineer | 建立單元測試與整合測試 |
-| 6 | security-auditor | 審查安全性（特別是 Auth、Point、Billing） |
-| 7 | performance-tuner | 優化效能（查詢、快取策略） |
-
-### 多 Agent 並行開發策略
-
-#### Phase 1（序列開發）
-
-基礎模組需序列開發，確保架構穩固：
-
-| 順序 | 模組 | 說明 |
-|------|------|------|
-| 1 | 專案初始化 | 後端 + 前端專案架構建立 |
-| 2 | Auth | 認證系統，所有模組依賴 |
-| 3 | Member | 會員系統，大部分模組依賴 |
-| 4 | Organization | 商會管理 |
-
-#### Phase 2-5（可並行開發）
-
-基礎模組完成後，可依相依性安排多 Agent 並行：
-
-| Agent | 負責模組 | 前置條件 |
-|-------|----------|----------|
-| Agent A | Point → Shop → Referral | 等待 Member 完成 |
-| Agent B | CMS | 等待 Auth 完成（相對獨立） |
-| Agent C | Event → Donation → Lottery | 等待 Point 完成 |
-| Agent D | Billing | 等待 Point 完成 |
-| Agent E | Chat → Notification | 等待 Member 完成 |
-
-### 模組相依性與開發順序
-
-```
-Level 0: Auth（最先開發）
-    ↓
-Level 1: Member, CMS（可並行）
-    ↓
-Level 2: Organization, Point, Shop, Referral, Meeting（可並行，依賴 Member）
-    ↓
-Level 3: Event, Donation, Lottery, Billing（可並行，依賴 Point）
-    ↓
-Level 4: Chat, Notification（依賴 Member）
-```
-
-### 品質保證流程
-
-每個模組完成後，執行以下檢查：
-
-| 檢查項目 | Agent | 內容 |
-|----------|-------|------|
-| 功能測試 | test-engineer | 單元測試、整合測試、E2E 測試 |
-| 安全審查 | security-auditor | 認證、授權、資料驗證、注入防護 |
-| 效能檢查 | performance-tuner | 查詢效能、N+1 問題、快取策略 |
-| 程式品質 | refactor-expert | 程式碼規範、重複代碼、SOLID 原則 |
-| 配置安全 | config-safety-reviewer | 環境變數、敏感資訊、生產配置 |
-
-### 重點模組額外審查
-
-以下模組因涉及金流或安全性，需額外審查：
-
-| 模組 | 額外審查項目 |
-|------|--------------|
-| Auth | JWT 安全性、Token 過期策略、密碼加密 |
-| Point | 交易原子性、餘額一致性、防重複扣款 |
-| Billing | 金流串接安全、交易記錄完整性、退款機制 |
-| Chat | 訊息加密、連線安全、歷史記錄保護 |
