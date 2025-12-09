@@ -30,6 +30,7 @@
 | SHOP | 店鋪通知 | 店鋪審核、推薦 |
 | BILLING | 帳務通知 | 繳費提醒、付款成功 |
 | DONATION | 捐贈通知 | 捐贈成功、專案更新 |
+| MEETING | 交流預約通知 | 預約邀請、確認、提醒 |
 
 ---
 
@@ -125,6 +126,7 @@
 | SHOP | 店鋪通知 |
 | BILLING | 帳務通知 |
 | DONATION | 捐贈通知 |
+| MEETING | 交流預約通知 |
 
 **動作類型列舉值：**
 
@@ -137,6 +139,7 @@
 | OPEN_CHAT | 開啟聊天 |
 | OPEN_ORDER | 開啟訂單 |
 | OPEN_PAGE | 開啟內部頁面 |
+| OPEN_MEETING | 開啟交流預約 |
 
 **對象類型列舉值：**
 
@@ -222,6 +225,7 @@
 | shopEnabled | 布林 | 店鋪通知（預設 true） |
 | billingEnabled | 布林 | 帳務通知（預設 true） |
 | donationEnabled | 布林 | 捐贈通知（預設 true） |
+| meetingEnabled | 布林 | 交流預約通知（預設 true） |
 | quietHoursEnabled | 布林 | 勿擾時段開關（預設 false） |
 | quietHoursStart | 字串 | 勿擾開始時間（選填，如 "22:00"） |
 | quietHoursEnd | 字串 | 勿擾結束時間（選填，如 "08:00"） |
@@ -276,6 +280,7 @@
 | SHOP | shopEnabled |
 | BILLING | billingEnabled |
 | DONATION | donationEnabled |
+| MEETING | meetingEnabled |
 
 若 pushEnabled = false，則所有推播都不發送。
 
@@ -329,6 +334,7 @@
 | actionData.chatRoomId | 字串 | 否 | 聊天室 ID |
 | actionData.orderId | 字串 | 否 | 訂單 ID |
 | actionData.page | 字串 | 否 | 內部頁面 |
+| actionData.meetingId | 字串 | 否 | 交流預約 ID |
 | targetType | 列舉 | 是 | 對象類型 |
 | targetIds | 字串陣列 | 否 | 指定對象 ID |
 | scheduledAt | 時間 | 否 | 排程時間 |
@@ -359,6 +365,7 @@
 | byType.shop | 整數 | 店鋪通知未讀數 |
 | byType.billing | 整數 | 帳務通知未讀數 |
 | byType.donation | 整數 | 捐贈通知未讀數 |
+| byType.meeting | 整數 | 交流預約通知未讀數 |
 
 ### 裝置註冊請求
 
@@ -384,6 +391,7 @@
 | shopEnabled | 布林 | 店鋪通知 |
 | billingEnabled | 布林 | 帳務通知 |
 | donationEnabled | 布林 | 捐贈通知 |
+| meetingEnabled | 布林 | 交流預約通知 |
 | quietHoursEnabled | 布林 | 勿擾時段開關 |
 | quietHoursStart | 字串/null | 勿擾開始時間 |
 | quietHoursEnd | 字串/null | 勿擾結束時間 |
@@ -401,6 +409,7 @@
 | shopEnabled | 布林 | 否 | 店鋪通知 |
 | billingEnabled | 布林 | 否 | 帳務通知 |
 | donationEnabled | 布林 | 否 | 捐贈通知 |
+| meetingEnabled | 布林 | 否 | 交流預約通知 |
 | quietHoursEnabled | 布林 | 否 | 勿擾時段開關 |
 | quietHoursStart | 字串 | 否 | 勿擾開始時間 |
 | quietHoursEnd | 字串 | 否 | 勿擾結束時間 |
@@ -470,3 +479,4 @@
 - [Auth 認證系統](./auth.md) - 身份驗證
 - [Member 會員系統](./member.md) - 通知接收者
 - [Chat 聊天系統](./chat.md) - WebSocket 即時通知、聊天訊息推播
+- [Meeting 交流預約系統](./meeting.md) - 預約邀請、確認、提醒通知

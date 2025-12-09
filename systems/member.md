@@ -8,7 +8,7 @@
 | 開發階段 | Phase 1 |
 | 複雜度 | 高 |
 | 相依模組 | Auth, Organization |
-| 被依賴 | Point, Shop, Referral, Event, Chat, Notification |
+| 被依賴 | Point, Shop, Referral, Event, Chat, Notification, Meeting |
 
 ---
 
@@ -293,7 +293,7 @@
 
 | 統計項目 | 說明 |
 |----------|------|
-| exchangeCount | 交流次數 |
+| exchangeCount | 交流次數（來自 Meeting 模組統計） |
 | referralCount | 轉介紹次數 |
 | memberJoinCount | 介紹入會次數 |
 | guestCount | 邀約來賓數 |
@@ -380,4 +380,5 @@
 - [Point 點數系統](./point.md) - 點數管理
 - [Shop 店鋪系統](./shop.md) - 會員店鋪
 - [Referral 推薦系統](./referral.md) - 會員推薦
-- [Chat 聊天系統](./chat.md) - 會員交流
+- [Chat 聊天系統](./chat.md) - 會員即時通訊
+- [Meeting 交流預約系統](./meeting.md) - 會員 1 對 1 交流預約
