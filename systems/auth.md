@@ -214,17 +214,17 @@
 
 ### 會員註冊
 
-| 欄位 | 類型 | 說明 |
-|------|------|------|
-| phone | 字串 | 手機號碼 |
-| password | 字串 | 密碼 |
-| memberType | 列舉 | PERSONAL / PUBLIC_MERCHANT / BUSINESS |
-| name | 字串 | 姓名 |
-| email | 字串 | 電子郵件（選填） |
-| organizationId | 字串 | 所屬商會 ID |
-| referrerId | 字串 | 推薦人 ID（選填） |
-| signature | 字串 | 電子簽名（Base64 圖片） |
-| agreePrivacy | 布林 | 同意隱私政策 |
+| 欄位 | 類型 | 必填 | 說明 |
+|------|------|------|------|
+| phone | 字串 | 是 | 手機號碼 |
+| password | 字串 | 是 | 密碼 |
+| memberType | 列舉 | 是 | PERSONAL / PUBLIC_MERCHANT / BUSINESS |
+| name | 字串 | 是 | 姓名 |
+| email | 字串 | 否 | 電子郵件 |
+| organizationId | 字串 | 是 | 所屬商會 ID（必填，會員必須歸屬於某商會） |
+| referrerId | 字串 | 否 | 推薦人 ID |
+| signature | 字串 | 是 | 電子簽名（Base64 圖片） |
+| agreePrivacy | 布林 | 是 | 同意隱私政策 |
 
 ### 登入請求
 

@@ -149,7 +149,7 @@
 | gender | 列舉 | 性別（選填） |
 | type | 列舉 | 會員類型 |
 | status | 列舉 | 會員狀態（預設 PENDING） |
-| organizationId | 字串 | 所屬商會 |
+| organizationId | 字串 | 所屬商會（NOT NULL，必填） |
 | referrerId | 字串 | 推薦人 ID（選填） |
 | referralCode | 字串 | 推薦碼（唯一） |
 | joinedAt | 時間 | 入會日期（選填） |
