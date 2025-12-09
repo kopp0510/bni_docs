@@ -8,7 +8,7 @@
 | 開發階段 | Phase 1 |
 | 複雜度 | 高 |
 | 相依模組 | Auth, Organization |
-| 被依賴 | Point, Shop, Event, Chat, Notification |
+| 被依賴 | Point, Shop, Referral, Event, Chat, Notification |
 
 ---
 
@@ -379,4 +379,5 @@
 - [Organization 商會管理](./organization.md) - 商會歸屬
 - [Point 點數系統](./point.md) - 點數管理
 - [Shop 店鋪系統](./shop.md) - 會員店鋪
+- [Referral 推薦系統](./referral.md) - 會員推薦
 - [Chat 聊天系統](./chat.md) - 會員交流

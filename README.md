@@ -35,10 +35,10 @@
 │                                                                             │
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
 │  │                        會員延伸 (Phase 2)                            │   │
-│  │  ┌──────────────┐              ┌──────────────┐                     │   │
-│  │  │    Point     │              │     Shop     │                     │   │
-│  │  │   點數系統    │              │    店鋪系統   │                     │   │
-│  │  └──────────────┘              └──────────────┘                     │   │
+│  │  ┌──────────────┐ ┌──────────────┐ ┌──────────────┐                 │   │
+│  │  │    Point     │ │     Shop     │ │   Referral   │                 │   │
+│  │  │   點數系統    │ │    店鋪系統   │ │   推薦系統    │                 │   │
+│  │  └──────────────┘ └──────────────┘ └──────────────┘                 │   │
 │  └─────────────────────────────────────────────────────────────────────┘   │
 │                                                                             │
 │  ┌─────────────────────────────────────────────────────────────────────┐   │
@@ -88,13 +88,14 @@
 | 3 | Member 會員系統 | [member.md](./systems/member.md) | 高 | Phase 1 |
 | 4 | Point 點數系統 | [point.md](./systems/point.md) | 中 | Phase 2 |
 | 5 | Shop 店鋪系統 | [shop.md](./systems/shop.md) | 中 | Phase 2 |
-| 6 | Event 活動系統 | [event.md](./systems/event.md) | 中 | Phase 3 |
-| 7 | Donation 捐贈系統 | [donation.md](./systems/donation.md) | 低 | Phase 3 |
-| 8 | Lottery 抽獎系統 | [lottery.md](./systems/lottery.md) | 低 | Phase 3 |
-| 9 | CMS 內容管理 | [cms.md](./systems/cms.md) | 低 | Phase 4 |
-| 10 | Billing 帳務系統 | [billing.md](./systems/billing.md) | 中 | Phase 4 |
-| 11 | Chat 聊天系統 | [chat.md](./systems/chat.md) | 高 | Phase 5 |
-| 12 | Notification 通知系統 | [notification.md](./systems/notification.md) | 中 | Phase 5 |
+| 6 | Referral 推薦系統 | [referral.md](./systems/referral.md) | 中 | Phase 2 |
+| 7 | Event 活動系統 | [event.md](./systems/event.md) | 中 | Phase 3 |
+| 8 | Donation 捐贈系統 | [donation.md](./systems/donation.md) | 低 | Phase 3 |
+| 9 | Lottery 抽獎系統 | [lottery.md](./systems/lottery.md) | 低 | Phase 3 |
+| 10 | CMS 內容管理 | [cms.md](./systems/cms.md) | 低 | Phase 4 |
+| 11 | Billing 帳務系統 | [billing.md](./systems/billing.md) | 中 | Phase 4 |
+| 12 | Chat 聊天系統 | [chat.md](./systems/chat.md) | 高 | Phase 5 |
+| 13 | Notification 通知系統 | [notification.md](./systems/notification.md) | 中 | Phase 5 |
 
 ---
 
@@ -122,13 +123,13 @@
 │   商會管理    │ │    會員系統   │ │   內容管理    │
 └──────┬───────┘ └──────┬───────┘ └──────────────┘
        │                │
-       │         ┌──────┴──────┐
-       │         │             │
-       ▼         ▼             ▼
-┌──────────────┐ ┌──────────────┐
-│    Point     │ │     Shop     │
-│   點數系統    │ │    店鋪系統   │
-└──────┬───────┘ └──────────────┘
+       │    ┌───────────┼───────────┐
+       │    │           │           │
+       ▼    ▼           ▼           ▼
+┌──────────────┐ ┌──────────────┐ ┌──────────────┐
+│    Point     │ │     Shop     │ │   Referral   │
+│   點數系統    │ │    店鋪系統   │ │   推薦系統    │
+└──────┬───────┘ └──────────────┘ └──────────────┘
        │
        ├─────────────────┬─────────────────┐
        │                 │                 │
@@ -202,6 +203,7 @@ shangmai-backend/
 │       ├── member/
 │       ├── point/
 │       ├── shop/
+│       ├── referral/
 │       ├── event/
 │       ├── donation/
 │       ├── lottery/
@@ -232,6 +234,7 @@ shangmai-backend/
 ### Phase 2 - 會員延伸
 - Point 點數系統
 - Shop 店鋪系統
+- Referral 推薦系統
 
 ### Phase 3 - 活動功能
 - Event 活動系統
@@ -311,7 +314,7 @@ shangmai-backend/
 
 | Agent | 負責模組 | 前置條件 |
 |-------|----------|----------|
-| Agent A | Point → Shop | 等待 Member 完成 |
+| Agent A | Point → Shop → Referral | 等待 Member 完成 |
 | Agent B | CMS | 等待 Auth 完成（相對獨立） |
 | Agent C | Event → Donation → Lottery | 等待 Point 完成 |
 | Agent D | Billing | 等待 Point 完成 |
@@ -324,7 +327,7 @@ Level 0: Auth（最先開發）
     ↓
 Level 1: Member, CMS（可並行）
     ↓
-Level 2: Organization, Point, Shop（可並行，依賴 Member）
+Level 2: Organization, Point, Shop, Referral（可並行，依賴 Member）
     ↓
 Level 3: Event, Donation, Lottery, Billing（可並行，依賴 Point）
     ↓
