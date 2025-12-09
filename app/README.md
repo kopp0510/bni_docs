@@ -8,14 +8,34 @@
 
 ## 技術棧
 
-| 項目 | 技術選型 |
-|------|----------|
-| 框架 | React Native / Flutter |
-| 狀態管理 | Redux / Provider |
-| 網路請求 | Axios / Dio |
-| 即時通訊 | Socket.io |
-| 推播通知 | Firebase Cloud Messaging |
-| 本地儲存 | AsyncStorage / SharedPreferences |
+| 項目 | 技術選型 | 說明 |
+|------|----------|------|
+| 框架 | Expo (React Native) | 跨平台原生 App 開發 |
+| 語言 | TypeScript | 型別安全 |
+| 狀態管理 | Zustand / Redux Toolkit | 輕量級狀態管理 |
+| 網路請求 | Axios | HTTP 請求 |
+| 即時通訊 | OpenIM SDK (評估中) | 聊天功能 |
+| 推播通知 | Expo Notifications | 推播通知服務 |
+| 本地儲存 | AsyncStorage / Expo SecureStore | 資料與 Token 儲存 |
+| 導航 | Expo Router | 檔案式路由 |
+| UI 元件 | React Native Paper / NativeWind | UI 框架 |
+
+### 為何選擇 Expo
+
+| 優點 | 說明 |
+|------|------|
+| 原生效能 | 渲染真正的原生 UI 元件，效能優於混合式方案 |
+| 開發體驗 | Expo Go 即時預覽、不需開啟 Xcode/Android Studio |
+| OTA 更新 | 可即時推送更新，不需重新上架 App Store |
+| 完整生態 | 100+ 預建函式庫（相機、推播、地圖等） |
+| 雲端建置 | EAS Build 雲端編譯，無需本地環境 |
+| 社群支援 | 80% React Native 開發者採用，資源豐富 |
+
+### Expo 官方資源
+
+- 官網：https://expo.dev/
+- 文件：https://docs.expo.dev/
+- GitHub：https://github.com/expo/expo
 
 ---
 

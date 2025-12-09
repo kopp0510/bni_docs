@@ -164,13 +164,13 @@ bni_docs/
 | 資料庫 | PostgreSQL |
 | ORM | Prisma |
 | 快取 | Redis |
-| 即時通訊 | Socket.io |
+| 即時通訊 | OpenIMSDK (評估中) |
 | 檔案儲存 | S3 / MinIO |
 | 容器化 | Docker + Docker Compose |
 | API 文件 | Swagger |
 | 後台前端 | React + Ant Design |
-| 客端 App | React Native / Flutter |
-| 推播通知 | Firebase Cloud Messaging |
+| 客端 App | Expo (React Native) |
+| 推播通知 | Expo Notifications / FCM |
 
 ---
 
